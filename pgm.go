@@ -9,11 +9,12 @@ import (
 	"strings"
 )
 
+
 type PGM struct {
 	data          [][]uint8
 	width, height int
 	magicNumber   string
-	max           uint
+	max           uint8
 }
 
 func ReadPGM(filename string) (*PGM, error) {
@@ -55,7 +56,7 @@ func ReadPGM(filename string) (*PGM, error) {
 		line := scanner.Text()
 		if magicNumber == "P2" {
 			row := make([]uint8, 0)
-			for _, char := range strings.Fields(line) {
+			for _, char := range strings .Fields(line) {
 				pixel, err := strconv.Atoi(char)
 				if err != nil {
 					fmt.Println("conversion non valide :", err)
@@ -74,7 +75,7 @@ func ReadPGM(filename string) (*PGM, error) {
 		width:       width,
 		height:      height,
 		magicNumber: magicNumber,
-		max:         uint8(max),
+		max:         uint8 (max),
 	}, nil
 }
 
@@ -94,8 +95,8 @@ func (pgm *PGM) Set(x, y int, value uint8) {
 }
 
 func (pgm *PGM) Invert() {
-	for i := 0; x < len(pgm.data); x++ {
-		for j := 0; y < len(pgm.data[y]); y++ {
+	for x := 0; x < len(pgm.data); x++ {
+		for y := 0; y < len(pgm.data[y]); y++ {
 			pgm.data[x][y] = uint8(pgm.max) - pgm.data[x][y]
 		}
 	}
@@ -115,15 +116,18 @@ func (pgm *PGM) Flip() { // image vertical
 	}
 }
 func (pgm *PGM) SetMaxValue(maxValue uint8) { // valeur maximal
-	pgm.max = int(maxValue)
+	pgm.max = uint8 (maxValue)
 }
 
-func (pgm *PGM) Flop() { // image la vertical
-	NumRows := pgm.width
-	Numcolums := pgm.height
+
+func (pgm *PGM) Flop() {
+	for y := 0; y < pgm.height/2; y++ {
+		pgm.data[y], pgm.data[pgm.height-y-1] = pgm.data[pgm.height-y-1], pgm.data[y]
+	}
 }
 
-func (pgm *PGM) SetMagicNumber(magicNumber string) {
+
+func (*PGM).SetMagicNumber(magicNumber string) {
 	pgm.magicNumber = magicNumber
 }
 

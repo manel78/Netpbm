@@ -1,4 +1,4 @@
-package ppm
+package main
 
 type PPM struct {
 	Data          [][]Pixel
@@ -45,7 +45,7 @@ func (ppm *PPM) DrawPolygon(points []Point, color Pixel) {
 }
 
 func (ppm *PPM) SetMaxValue(maxValue uint8) {
-	ppm.max = uint(maxValue)
+	ppm.max = uint8(maxValue)
 }
 
 func NewPPM(width, height int) *PPM {
